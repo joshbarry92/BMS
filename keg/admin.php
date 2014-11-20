@@ -10,17 +10,17 @@
 <link rel="stylesheet" type="text/css" href="beer.css">
 </head>
 <body>
+
 <h1><p align='center'><img src='BeerLabel.png' </img><br> <?php $title ?> </h1></p>
 
 <div style="text-align:center">
 <table class="center">
   <tr>
-    <td><a href="#"><h2>Add a Brew</h2></a></td>
-    <td><h2>Manage Stock</h2></td>
+    <td><a href="#openModal"><h2>Add a Brew</h2></a></td>
+    <td><a href="#openModal"><h2>Manage Stock</h2></a></td>
   </tr>
 </div>
 
-<a href="#openModal">Open Modal</a>
 
 <div id="openModal" class="modalDialog">
 	<div>
