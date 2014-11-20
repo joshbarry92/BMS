@@ -15,9 +15,20 @@
 <div style="text-align:center">
 <table class="center">
   <tr>
-    <td><h2>Add a Brew</h2></td>
+    <td><a href="#"><h2>Add a Brew</h2></a></td>
     <td><h2>Manage Stock</h2></td>
   </tr>
+</div>
+
+<a href="#openModal">Open Modal</a>
+
+<div id="openModal" class="modalDialog">
+	<div>
+		<a href="#close" title="Close" class="close">X</a>
+		<h2>Modal Box</h2>
+		<p>This is a sample modal box that can be created using the powers of CSS3.</p>
+		<p>You could do a lot of things here like have a pop-up ad that shows when your website loads, or create a login/register form for users.</p>
+	</div>
 </div>
 
 <!-- <form action="" method="POST">
