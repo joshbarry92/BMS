@@ -78,6 +78,18 @@ h2
 
 }
 
+h3
+{
+	margin: 0;
+	padding: 0;
+	text-transform: uppercase;
+	font-size:100%;
+	font-family: 'Rock Salt', cursive;
+	font-weight: normal;
+	color:#FFF
+
+}
+
 tbody tr.odd td
 {
 	background:transparent url(tr_bg.png) repeat top left;
@@ -171,4 +183,5 @@ table.center {
 }
 
 .close:hover { background: #00d9ff; }
+
 
