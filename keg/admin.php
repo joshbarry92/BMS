@@ -59,16 +59,79 @@
 		<a href="#close" title="Close" class="close">X</a>
 		<h2 style="color:#000000;">Search the BdB</h2>
 		<br>
-		<form action="" method="POST">
-			Search By: <select>
-						  <option value="brewery">Name</option>
-						  <option value="brewery">Brewery</option>
-						  <option value="style">Style</option>
+		<form action="#searchResult" method="POST">
+			Search By: <select name="type">
+						  <option value="Beer">Name</option>
+						  <option value="Brewery">Brewery</option>
+						  <option value="Style">Style</option>
 						</select>
-			<input type="text" name="style"><br>
+			<input type="text" name="search"><br>
 			<input type="submit">
 	</form>
 	
+	</div>
+</div>
+
+<div id="searchResult" class="modalDialog">
+	<div>
+		<a href="#close" title="Close" class="close">X</a>
+		<h2 style="color:#000000;">Search the BdB</h2>
+		<br>
+		<?php 
+		$db_host = 'localhost';
+		$db_user = 'root';
+		$db_pwd = 'beer';
+		$database = 'beer';
+		$table = 'Beer';
+		$search = $_GET["search"];
+		$type = $_GET["type"];
+		if (!mysql_connect($db_host, $db_user, $db_pwd))    
+			die("Can't connect to database");
+		if (!mysql_select_db($database))    
+			die("Can't select database");
+
+	
+
+		// sending query
+		$result = mysql_query("SELECT Beer.Beer,
+		        Beer.Brewery, 
+		        Beer.Quantity,
+		FROM    Beer
+		        INNER JOIN BeerStock
+		            ON Beer.Beer = BeerStock.Beer
+		Where Beer.Live=100
+		AND ".$type." = ".$search."
+		GROUP BY Beer.Beer, 
+		        Beer.Brewery
+		ORDER BY Beer ASC
+		");
+		if (!$result) {    
+			die("Query to show fields from table failed");
+		}
+		$fields_num = mysql_num_fields($result);
+		echo "<table align='center'><col><col id='middle'><col><col id='middle'><col><col><col><col><thead>";
+
+		// printing table headers
+		for($i=0; $i<$fields_num; $i++)
+		{    $field = mysql_fetch_field($result);
+		    echo "<th>{$field->name}</th>";
+		}
+		echo "</thead>\n";
+
+
+		while($row = mysql_fetch_array($result))
+		  
+		{
+		  echo "<tr>";
+		  echo "<td><h2>" . $row['Beer'] . "</h2></td>";
+		  echo "<td>" . $row['Brewery'] . "</td>";
+		  echo "<td>" . $row['Quantity'] . "</td>";  
+		  echo "</tr>";
+		  }
+		echo "</table>";
+
+		mysql_free_result($result);
+		?>
 	</div>
 </div>
 
