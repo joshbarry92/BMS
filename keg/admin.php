@@ -41,6 +41,7 @@
 		<h2 style="color:#000000;">Add Homebrew</h2>
 		<br>
 		<form action="" method="POST">
+			Name: <input type="text" name="name"><br>
 			Brewey: <input type="text" name="brewery"><br>
 			Style: <input type="text" name="style"><br>
 			ABV: <input type="text" name="style"><br>
@@ -56,10 +57,11 @@
 <div id="searchBeer" class="modalDialog">
 	<div>
 		<a href="#close" title="Close" class="close">X</a>
-		<h2 style="color:#000000;">Add Homebrew</h2>
+		<h2 style="color:#000000;">Search the BdB</h2>
 		<br>
 		<form action="" method="POST">
 			Search By: <select>
+						  <option value="brewery">Name</option>
 						  <option value="brewery">Brewery</option>
 						  <option value="style">Style</option>
 						</select>
