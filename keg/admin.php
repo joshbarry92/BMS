@@ -7,7 +7,7 @@
 <title><?php $title ?></title>
 <link href="http://fonts.googleapis.com/css?family=Oswald" rel="stylesheet" type="text/css" />
 <link href="http://fonts.googleapis.com/css?family=Arvo" rel="stylesheet" type="text/css" />
-<link href='http://fonts.googleapis.com/css?family=Rock+Salt' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Walter+Turncoat' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" type="text/css" href="beer.css">
 </head>
 <body>
@@ -28,7 +28,8 @@
 		<a href="#close" title="Close" class="close">X</a>
 		<h2 style="color:#000000;">Add A Brew</h2>
 		<br>
-		<a href="#addBeer"><h3>Search Beer List</h3></a>
+		<a href="#searchBeer"><h3>Search Beer List</h3></a>
+		<a href="#addBeer"><h3>Add Custom Homebrew</h3></a>
 		<br><br>
 		<button>Add Homebrew</button>
 	</div>
@@ -46,6 +47,23 @@
 			Hops: <input type="text" name="style"><br>
 			SRM: <input type="text" name="style"><br>
 			Label: <input type="file" name="img"><br>
+			<input type="submit">
+	</form>
+	
+	</div>
+</div>
+
+<div id="searchBeer" class="modalDialog">
+	<div>
+		<a href="#close" title="Close" class="close">X</a>
+		<h2 style="color:#000000;">Add Homebrew</h2>
+		<br>
+		<form action="" method="POST">
+			Search By: <select>
+						  <option value="brewery">Brewery</option>
+						  <option value="style">Style</option>
+						</select>
+			<input type="text" name="style"><br>
 			<input type="submit">
 	</form>
 	
