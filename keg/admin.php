@@ -18,7 +18,7 @@
 <table class="center">
   <tr>
     <td><a href="#openModal"><h2>Add a Brew</h2></a></td>
-    <td><a href="#openModal"><h2>Manage Stock</h2></a></td>
+    <td><a href="#manageStock"><h2>Manage Stock</h2></a></td>
   </tr>
 </div>
 
@@ -72,6 +72,46 @@
 	</div>
 </div>
 
+<div id="manageStock" class="modalDialog">
+	<div>
+		<a href="#close" title="Close" class="close">X</a>
+		<h2 style="color:#000000;">Search the Beer List</h2>
+		<br>
+		<?php 
+		$db_host = 'localhost';
+		$db_user = 'beerr';
+		$db_pwd = 'beerr';
+		$database = 'beer';
+		$table = 'Beer';
+
+		if (!mysql_connect($db_host, $db_user, $db_pwd))    
+			die("Can't connect to database");
+		if (!mysql_select_db($database))    
+			die("Can't select database");
+
+		// sending query
+		$result = mysql_query("SELECT Beer, Quantity  FROM BeerStock WHERE Quantity <> '0'");
+
+		
+		if (!$result) {    
+			die($result);
+		}
+		$fields_num = mysql_num_fields($result);
+
+
+		while($row = mysql_fetch_array($result))
+		  
+		{
+		  echo $row['Beer'] . ", " . $row['Quantity'];
+		  echo "<hr>";
+		}
+
+		mysql_free_result($result);
+		
+		?>
+	</div>
+</div>
+
 <div id="searchResult" class="modalDialog">
 	<div>
 		<a href="#close" title="Close" class="close">X</a>
@@ -90,17 +130,13 @@
 		if (!mysql_select_db($database))    
 			die("Can't select database");
 
-	
-
 		// sending query
 		$result = mysql_query("SELECT Brewery, Beer	FROM Beer WHERE " . $type . " like '%" . $search . "%'");
-
 		
 		if (!$result) {    
 			die($result);
 		}
 		$fields_num = mysql_num_fields($result);
-
 
 		while($row = mysql_fetch_array($result))
 		  
