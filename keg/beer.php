@@ -37,7 +37,6 @@ WHEN Quantity >= 44 THEN '100'
 WHEN Quantity IS NULL THEN '0'
 END AS Stock,
 ROUND(Quantity/0.47) AS Pints,
-Img AS Label
 FROM Beer
 LEFT JOIN BeerStock
 ON Beer.UUID = BeerStock.ID
