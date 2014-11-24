@@ -80,8 +80,8 @@
 		
 		<?php 
 		$db_host = 'localhost';
-		$db_user = 'beerw';
-		$db_pwd = 'beerwbeerrbeerw';
+		$db_user = 'beerr';
+		$db_pwd = 'beerr';
 		$database = 'beer';
 		$table = 'Beer';
 		$id = $_GET['id'];
@@ -110,12 +110,12 @@
 		  echo "Quantity: " . $row['Quantity'] . "L";
 		  echo "</h4>";
 		  echo "<br><br>";
-		  echo "<a href='?amt=58.66&id=" . $id . "#addStock'><h3>New Keg</h3></a><hr>";
-		  echo "<a href='?amt=3.54&id=" . $id . "#addStock'><h3>New 12 Pack (10oz. Bottles)</h3></a><hr>";
-		  echo "<a href='?amt=4.25&id=" . $id . "#addStock'><h3>New 12 Pack (12oz. Bottles)</h3></a><hr>";
-		  echo "<a href='?amt=29.33&id=" . $id . "#addStock'><h3>New Half Keg</h3></a><hr>";
-		  echo "<a href='?amt=14.66&id=" . $id . "#addStock'><h3>New Quarter Keg</h3></a><hr>";
-          echo "<a href='?amt=5&id=" . $id . "#addStock'><h3>New 5L Keg</h3></a><hr>";
+		  echo "<a href='?amt=58.66&id=" . $id . "&qty=" . $row['Quantity'] . "#addStock'><h3>New Keg</h3></a><hr>";
+		  echo "<a href='?amt=3.54&id=" . $id . "&qty=" . $row['Quantity'] . "#addStock'><h3>New 12 Pack (10oz. Bottles)</h3></a><hr>";
+		  echo "<a href='?amt=4.25&id=" . $id . "&qty=" . $row['Quantity'] . "#addStock'><h3>New 12 Pack (12oz. Bottles)</h3></a><hr>";
+		  echo "<a href='?amt=29.33&id=" . $id . "&qty=" . $row['Quantity'] . "#addStock'><h3>New Half Keg</h3></a><hr>";
+		  echo "<a href='?amt=14.66&id=" . $id . "&qty=" . $row['Quantity'] . "#addStock'><h3>New Quarter Keg</h3></a><hr>";
+          echo "<a href='?amt=5&id=" . $id . "&qty=" . $row['Quantity'] . "#addStock'><h3>New 5L Keg</h3></a><hr>";
 		  echo "<a href='#customStock'><h3>Custom Amount</h3></a><hr>";
 		  echo "</form>";
 		}
@@ -125,7 +125,6 @@
 		?>
 	</div>
 </div>
-
 
 <div id="manageStock" class="modalDialog">
 	<div>
@@ -145,7 +144,7 @@
 			die("Can't select database");
 
 		// sending query
-		$result = mysql_query("SELECT ID, Beer, Brewery, Quantity FROM Beer INNER JOIN BeerStock on id = uuid WHERE Quantity <> '0'");
+		$result = mysql_query("SELECT ID, Beer, Brewery, Quantity FROM Beer INNER JOIN BeerStock on id = uuid WHERE Quantity <> '0' ORDER BY ID");
 
 		
 		if (!$result) {    
@@ -170,7 +169,7 @@
 
 <div id="addStock" class="modalDialog">
 	<div>
-		<a href="#close" title="Close" class="close">X</a>
+		<a href="#close" onClick="history.go(0)" title="Close" class="close">X</a>
 		<h2 style="color:#000000;">Add New Beer</h2>
 		<br>
 		<?php
@@ -181,14 +180,17 @@
 		$dbname = 'beer';
 		$table = 'Beer';
 		$id = $_GET['id'];
+		$qty = $_GET['qty'];
 		$amt = $_GET['amt'];
+		$fin = $qty + $amt;
+		
 
 		
 		try {
 			$conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
 			// set the PDO error mode to exception
 			$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$sql = "UPDATE BeerStock SET Quantity = '" . $amt . "' WHERE ID = '" . $id . "'";
+			$sql = "UPDATE BeerStock SET Quantity = '" . $fin . "' WHERE ID = '" . $id . "'";
 			$conn->exec($sql);
 			echo "Beer Addeed!";
 			}
@@ -221,7 +223,7 @@
 			die("Can't select database");
 
 		// sending query
-		$result = mysql_query("SELECT UUID, Brewery, Beer FROM Beer INNER JOIN BeerStock ON ID=UUID WHERE Quantity = 0 AND " . $type . " like '%" . $search . "%'");
+		$result = mysql_query("SELECT UUID, Brewery, Beer FROM Beer INNER JOIN BeerStock ON ID=UUID WHERE Quantity = 0 AND " . $type . " like '%" . $search . "%' ORDER BY UUID");
 		
 		if (!$result) {    
 			die("Query Error!");

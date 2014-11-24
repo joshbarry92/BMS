@@ -29,13 +29,15 @@ if (!mysql_select_db($database))
 $result = mysql_query("SELECT Beer, Brewery, Style, ABV, Hops, SRM, 
 CASE 
 WHEN Quantity <= 0 THEN '0'
-WHEN Quantity BETWEEN 0 and 999 THEN '10' 
-WHEN Quantity BETWEEN 1000 AND 2500 THEN '25'
-WHEN Quantity BETWEEN 2501 AND 4999 THEN '50'
-WHEN Quantity BETWEEN 5000 AND 7500 THEN '75'
-WHEN Quantity >= 7501 THEN '100' 
+WHEN Quantity BETWEEN 0 and 6 THEN '10' 
+WHEN Quantity BETWEEN 7 AND 28 THEN '25'
+WHEN Quantity BETWEEN 14 AND 28 THEN '50'
+WHEN Quantity BETWEEN 29 AND 43 THEN '75'
+WHEN Quantity >= 44 THEN '100' 
 WHEN Quantity IS NULL THEN '0'
-END AS Stock
+END AS Stock,
+ROUND(Quantity/0.47) AS Pints,
+Img AS Label
 FROM Beer
 LEFT JOIN BeerStock
 ON Beer.UUID = BeerStock.ID
@@ -74,9 +76,9 @@ while($row = mysql_fetch_array($result))
   echo "<td>" . $row['Brewery'] . "</td>";
   echo "<td>" . $row['Style'] . "</td>";
   echo "<td>" . $row['ABV'] . "</td>";
-  echo "<td><img src='/kegerface/images/" . $row['Hops'] . " Hops.png' width='200'</td>";
-  echo "<td><img src='/kegerface/images/SRM "	.	$row['SRM']	.	".png' height='75'</td>";
-  echo "<td><img src='/kegerface/images/kegs/"	. 	$row['Stock']	.	" .png' width='40'></td>"; 
+  echo "<td><img src='/images/" . $row['Hops'] . " Hops.png' width='200'</td>";
+  echo "<td><img src='/images/SRM "	.	$row['SRM']	.	".png' height='75'</td>";
+  echo "<td><img src='/images/kegs/"	. 	$row['Stock']	.	" .png' width='40'></td>"; 
   echo "<td>" . $row['Pints'] . "</td>";  
  
   echo "</tr>";
