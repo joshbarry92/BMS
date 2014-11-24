@@ -110,13 +110,13 @@
 		  echo "Quantity: " . $row['Quantity'] . "L";
 		  echo "</h4>";
 		  echo "<br><br>";
-		  echo "<a href='#'><h3>New Keg</h3></a><hr>";
-		  echo "<a href='#'><h3>New 12 Pack</h3></a><hr>";
-		  echo "<a href='#'><h3>New 6 Pach</h3></a><hr>";
-		  echo "<a href='#'><h3>New Half Keg</h3></a><hr>";
-		  echo "<a href='#'><h3>New Quarter Keg</h3></a><hr>";
-          echo "<a href='#'><h3>New 5L Keg</h3></a><hr>";
-		  echo "<a href='#'><h3>Custom Amount</h3></a><hr>";
+		  echo "<a href='?amt=58.66&id=" . $id . "#addStock'><h3>New Keg</h3></a><hr>";
+		  echo "<a href='?amt=3.54&id=" . $id . "#addStock'><h3>New 12 Pack (10oz. Bottles)</h3></a><hr>";
+		  echo "<a href='?amt=4.25&id=" . $id . "#addStock'><h3>New 12 Pack (12oz. Bottles)</h3></a><hr>";
+		  echo "<a href='?amt=29.33&id=" . $id . "#addStock'><h3>New Half Keg</h3></a><hr>";
+		  echo "<a href='?amt=14.66&id=" . $id . "#addStock'><h3>New Quarter Keg</h3></a><hr>";
+          echo "<a href='?amt=5&id=" . $id . "#addStock'><h3>New 5L Keg</h3></a><hr>";
+		  echo "<a href='#customStock'><h3>Custom Amount</h3></a><hr>";
 		  echo "</form>";
 		}
 
@@ -168,6 +168,40 @@
 	</div>
 </div>
 
+<div id="addStock" class="modalDialog">
+	<div>
+		<a href="#close" title="Close" class="close">X</a>
+		<h2 style="color:#000000;">Add New Beer</h2>
+		<br>
+		<?php
+
+		$servername = "localhost";
+		$username = "beerw";
+		$password = "beerwbeerrbeerw";
+		$dbname = 'beer';
+		$table = 'Beer';
+		$id = $_GET['id'];
+		$amt = $_GET['amt'];
+
+		
+		try {
+			$conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+			// set the PDO error mode to exception
+			$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			$sql = "UPDATE BeerStock SET Quantity = '" . $amt . "' WHERE ID = '" . $id . "'";
+			$conn->exec($sql);
+			echo "Beer Addeed!";
+			}
+		catch(PDOException $e)
+			{
+				echo $sql . "<br>" . $e->getMessage();
+			}
+		
+		?>
+		
+	</div>
+</div>
+
 <div id="searchResult" class="modalDialog">
 	<div>
 		<a href="#close" title="Close" class="close">X</a>
@@ -187,7 +221,7 @@
 			die("Can't select database");
 
 		// sending query
-		$result = mysql_query("SELECT UUID, Brewery, Beer FROM Beer WHERE " . $type . " like '%" . $search . "%'");
+		$result = mysql_query("SELECT UUID, Brewery, Beer FROM Beer INNER JOIN BeerStock ON ID=UUID WHERE Quantity = 0 AND " . $type . " like '%" . $search . "%'");
 		
 		if (!$result) {    
 			die("Query Error!");
@@ -199,6 +233,8 @@
 		  echo $row['UUID'] . ": " . $row['Brewery'] . ", " . $row['Beer'] . " | <a href='?id=" . $row['UUID'] . "#editStock'>Edit Stock</a>";
 		  echo "<hr>";
 		}
+		
+		echo "<i><br>Don't see Your beer?<br>See if its already in your <a href='#manageStock'>active inventory</a><br>or <a href='#addBeer'>add it</a> to the Database!</i>";
 
 		mysql_free_result($result);
 		
