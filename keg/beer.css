@@ -140,6 +140,8 @@ table.center {
 	background: rgba(0,0,0,0.8);
 	z-index: 99999;
 	opacity:0;
+	overflow-y:auto;
+	overflow-x:visible;
 	-webkit-transition: opacity 400ms ease-in;
 	-moz-transition: opacity 400ms ease-in;
 	transition: opacity 400ms ease-in;
@@ -148,11 +150,14 @@ table.center {
 
 .modalDialog:target {
 	opacity:1;
+	overflow-x:visible;
 	pointer-events: auto;
 }
 
 .modalDialog > div {
 	width: 400px;
+	overflow-y:auto;
+	overflow-x:visible;
 	position: relative;
 	margin: 10% auto;
 	padding: 5px 20px 13px 20px;
@@ -165,6 +170,7 @@ table.center {
 
 .close {
 	background: #606061;
+	overflow-x:visible;
 	color: #FFFFFF;
 	line-height: 25px;
 	position: absolute;

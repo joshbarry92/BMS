@@ -1,10 +1,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<?php $title = "Barry's Bar" ?>
 <meta name="keywords" content="" />
 <meta name="description" content="" />
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<title><?php $title ?></title>
+<title>Barry's Bar</title>
 <link href="http://fonts.googleapis.com/css?family=Oswald" rel="stylesheet" type="text/css" />
 <link href="http://fonts.googleapis.com/css?family=Arvo" rel="stylesheet" type="text/css" />
 <link href='http://fonts.googleapis.com/css?family=Walter+Turncoat' rel='stylesheet' type='text/css'>
@@ -72,6 +71,16 @@
 	</div>
 </div>
 
+<div id="editStock" class="modalDialog">
+	<div>
+		<a href="#close" title="Close" class="close">X</a>
+		<h2 style="color:#000000;">Edit Stock</h2>
+		<br>
+		<h3>Hello <?php $_GET['id']; ?><h3>
+	</div>
+</div>
+
+
 <div id="manageStock" class="modalDialog">
 	<div>
 		<a href="#close" title="Close" class="close">X</a>
@@ -90,7 +99,7 @@
 			die("Can't select database");
 
 		// sending query
-		$result = mysql_query("SELECT Beer, Quantity  FROM BeerStock WHERE Quantity <> '0'");
+		$result = mysql_query("SELECT ID, Beer, Quantity  FROM BeerStock WHERE Quantity <> '0'");
 
 		
 		if (!$result) {    
@@ -102,7 +111,7 @@
 		while($row = mysql_fetch_array($result))
 		  
 		{
-		  echo $row['Beer'] . ", " . $row['Quantity'];
+		  echo $row['ID'] . ": " . $row['Beer'] . ", " . $row['Quantity'] . "| <a href='?id=" . $row['ID'] . "#editStock'>Edit Stock</a>";
 		  echo "<hr>";
 		}
 
