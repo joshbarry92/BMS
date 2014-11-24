@@ -26,32 +26,20 @@ if (!mysql_select_db($database))
 	die("Can't select database");
 
 // sending query
-$result = mysql_query("SELECT Beer.Beer,
-        Beer.Brewery, 
-        Beer.Style, 
-        Beer.ABV, 
-        Beer.Hops, 
-        Beer.SRM,
-        CASE WHEN Sum(BeerStock.Quantity) <= 0 THEN '0'
-            WHEN Sum(BeerStock.Quantity) BETWEEN 0 AND 999 THEN '10'
-			WHEN Sum(BeerStock.Quantity) BETWEEN 1000 AND 2500 THEN '25'
-            WHEN Sum(BeerStock.Quantity) BETWEEN 2501 AND 4999 THEN '50'
-            WHEN Sum(BeerStock.Quantity) BETWEEN 5000 AND 7500 THEN '75'
-            WHEN Sum(BeerStock.Quantity) >= 7501 THEN '100' 
-        END Stock,
-		Round((Sum(BeerStock.Quantity)/568), 0) Pints
-FROM    Beer
-        INNER JOIN BeerStock
-            ON Beer.Beer = BeerStock.Beer
-Where Beer.Live=100
-GROUP BY Beer.Beer, 
-        Beer.Brewery, 
-        Beer.Style, 
-        Beer.ABV, 
-        Beer.Hops, 
-        Beer.SRM
-ORDER BY Beer ASC
-");
+$result = mysql_query("SELECT Beer, Brewery, Style, ABV, Hops, SRM, 
+CASE 
+WHEN Quantity <= 0 THEN '0'
+WHEN Quantity BETWEEN 0 and 999 THEN '10' 
+WHEN Quantity BETWEEN 1000 AND 2500 THEN '25'
+WHEN Quantity BETWEEN 2501 AND 4999 THEN '50'
+WHEN Quantity BETWEEN 5000 AND 7500 THEN '75'
+WHEN Quantity >= 7501 THEN '100' 
+WHEN Quantity IS NULL THEN '0'
+END AS Stock
+FROM Beer
+LEFT JOIN BeerStock
+ON Beer.UUID = BeerStock.ID
+WHERE Quantity <> 0");
 if (!$result) {    
 	die("Query to show fields from table failed");
 }

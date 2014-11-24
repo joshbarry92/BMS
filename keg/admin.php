@@ -92,11 +92,11 @@
 			die("Can't select database");
 
 		// sending query
-		$result = mysql_query("SELECT ID, Beer, Quantity FROM BeerStock WHERE id = '" . $id . "'");
+		$result = mysql_query("SELECT ID, Beer, Brewery, Quantity FROM Beer LEFT JOIN BeerStock ON id = uuid WHERE Beer.UUID = '" . $id . "'");
 
 		
 		if (!$result) {    
-			die($result);
+			die("Can't Read Table");
 		}
 		$fields_num = mysql_num_fields($result);
 
@@ -145,19 +145,20 @@
 			die("Can't select database");
 
 		// sending query
-		$result = mysql_query("SELECT ID, Beer, Quantity  FROM BeerStock WHERE Quantity <> '0'");
+		$result = mysql_query("SELECT ID, Beer, Brewery, Quantity FROM Beer INNER JOIN BeerStock on id = uuid WHERE Quantity <> '0'");
 
 		
 		if (!$result) {    
 			die("Query Error!");
 		}
+		
 		$fields_num = mysql_num_fields($result);
 
 
 		while($row = mysql_fetch_array($result))
 		  
 		{
-		  echo $row['ID'] . ": " . $row['Beer'] . ", " . $row['Quantity'] . "| <a href='?id=" . $row['ID'] . "#editStock'>Edit Stock</a>";
+		  echo $row['ID'] . ": " . $row['Beer'] . ", " . $row['Quantity'] . " | <a href='?id=" . $row['ID'] . "#editStock'>Edit Stock</a>";
 		  echo "<hr>";
 		}
 
@@ -186,7 +187,7 @@
 			die("Can't select database");
 
 		// sending query
-		$result = mysql_query("SELECT Brewery, Beer	FROM Beer WHERE " . $type . " like '%" . $search . "%'");
+		$result = mysql_query("SELECT UUID, Brewery, Beer FROM Beer WHERE " . $type . " like '%" . $search . "%'");
 		
 		if (!$result) {    
 			die("Query Error!");
@@ -195,7 +196,7 @@
 
 		while($row = mysql_fetch_array($result))
 		{
-		  echo $row['Brewery'] . ", " . $row['Beer'];
+		  echo $row['UUID'] . ": " . $row['Brewery'] . ", " . $row['Beer'] . " | <a href='?id=" . $row['UUID'] . "#editStock'>Edit Stock</a>";
 		  echo "<hr>";
 		}
 
