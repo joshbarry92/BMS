@@ -7,6 +7,7 @@
 <link href="http://fonts.googleapis.com/css?family=Oswald" rel="stylesheet" type="text/css" />
 <link href="http://fonts.googleapis.com/css?family=Arvo" rel="stylesheet" type="text/css" />
 <link href='http://fonts.googleapis.com/css?family=Walter+Turncoat' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Overlock+SC' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" type="text/css" href="beer.css">
 </head>
 <body>
@@ -76,7 +77,52 @@
 		<a href="#close" title="Close" class="close">X</a>
 		<h2 style="color:#000000;">Edit Stock</h2>
 		<br>
-		<h3>Hello <?php $_GET['id']; ?><h3>
+		
+		<?php 
+		$db_host = 'localhost';
+		$db_user = 'beerw';
+		$db_pwd = 'beerwbeerrbeerw';
+		$database = 'beer';
+		$table = 'Beer';
+		$id = $_GET['id'];
+
+		if (!mysql_connect($db_host, $db_user, $db_pwd))    
+			die("Can't connect to database");
+		if (!mysql_select_db($database))    
+			die("Can't select database");
+
+		// sending query
+		$result = mysql_query("SELECT ID, Beer, Quantity FROM BeerStock WHERE id = '" . $id . "'");
+
+		
+		if (!$result) {    
+			die($result);
+		}
+		$fields_num = mysql_num_fields($result);
+
+
+		while($row = mysql_fetch_array($result))  
+		{
+		  echo "<form action='' method='GET'>";
+		  echo "<h4>";
+		  echo $row['ID'] . ": " . $row['Beer'];
+		  echo "<br>";
+		  echo "Quantity: " . $row['Quantity'] . "L";
+		  echo "</h4>";
+		  echo "<br><br>";
+		  echo "<a href='#'><h3>New Keg</h3></a><hr>";
+		  echo "<a href='#'><h3>New 12 Pack</h3></a><hr>";
+		  echo "<a href='#'><h3>New 6 Pach</h3></a><hr>";
+		  echo "<a href='#'><h3>New Half Keg</h3></a><hr>";
+		  echo "<a href='#'><h3>New Quarter Keg</h3></a><hr>";
+          echo "<a href='#'><h3>New 5L Keg</h3></a><hr>";
+		  echo "<a href='#'><h3>Custom Amount</h3></a><hr>";
+		  echo "</form>";
+		}
+
+		mysql_free_result($result);
+		
+		?>
 	</div>
 </div>
 
@@ -103,7 +149,7 @@
 
 		
 		if (!$result) {    
-			die($result);
+			die("Query Error!");
 		}
 		$fields_num = mysql_num_fields($result);
 
@@ -143,12 +189,11 @@
 		$result = mysql_query("SELECT Brewery, Beer	FROM Beer WHERE " . $type . " like '%" . $search . "%'");
 		
 		if (!$result) {    
-			die($result);
+			die("Query Error!");
 		}
 		$fields_num = mysql_num_fields($result);
 
 		while($row = mysql_fetch_array($result))
-		  
 		{
 		  echo $row['Brewery'] . ", " . $row['Beer'];
 		  echo "<hr>";
