@@ -1,5 +1,7 @@
 --Create Read Only Acct in SQL
-GRANT SELECT ON 'beer' TO 'beer_reader'@'localhost' IDENTIFIED BY 'beer_reader';;
+CREATE USER 'beerr'@'localhost' IDENTIFIED BY 'beerr';
+GRANT SELECT ON beer.* TO 'beerr'@'localhost';
 
 --Create Write Acct in SQL **BE SURE TO CHANGE THIS PASSWORD**
-GRANT UPDATE,DELETE,SELECT,INSERT, ON 'beer' TO 'beer_reader'@'localhost' IDENTIFIED BY 'beer_writer';;
+CREATE USER 'beerw'@'localhost' IDENTIFIED BY 'beerwbeerrbeerw';
+GRANT UPDATE,DELETE,SELECT,INSERT ON beer.* TO 'beerw'@'localhost';

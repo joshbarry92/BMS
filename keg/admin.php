@@ -29,16 +29,16 @@
 		<h2 style="color:#000000;">Add A Brew</h2>
 		<br>
 		<a href="#searchBeer"><h3>Search Beer List</h3></a>
+		<hr>
 		<a href="#addBeer"><h3>Add Custom Homebrew</h3></a>
 		<br><br>
-		<button>Add Homebrew</button>
 	</div>
 </div>
 
 <div id="addBeer" class="modalDialog">
 	<div>
 		<a href="#close" title="Close" class="close">X</a>
-		<h2 style="color:#000000;">Add Homebrew</h2>
+		<h2 style="color:#000000;">Add Custom Homebrew</h2>
 		<br>
 		<form action="" method="POST">
 			Name: <input type="text" name="name"><br>
@@ -57,9 +57,9 @@
 <div id="searchBeer" class="modalDialog">
 	<div>
 		<a href="#close" title="Close" class="close">X</a>
-		<h2 style="color:#000000;">Search the BdB</h2>
+		<h2 style="color:#000000;">Search the Beer List</h2>
 		<br>
-		<form action="#searchResult" method="POST">
+		<form action="#searchResult" method="GET">
 			Search By: <select name="type">
 						  <option value="Beer">Name</option>
 						  <option value="Brewery">Brewery</option>
@@ -75,12 +75,12 @@
 <div id="searchResult" class="modalDialog">
 	<div>
 		<a href="#close" title="Close" class="close">X</a>
-		<h2 style="color:#000000;">Search the BdB</h2>
+		<h2 style="color:#000000;">Search the Beer List</h2>
 		<br>
 		<?php 
 		$db_host = 'localhost';
-		$db_user = 'root';
-		$db_pwd = 'beer';
+		$db_user = 'beerr';
+		$db_pwd = 'beerr';
 		$database = 'beer';
 		$table = 'Beer';
 		$search = $_GET["search"];
@@ -93,44 +93,24 @@
 	
 
 		// sending query
-		$result = mysql_query("SELECT Beer.Beer,
-		        Beer.Brewery, 
-		        Beer.Quantity,
-		FROM    Beer
-		        INNER JOIN BeerStock
-		            ON Beer.Beer = BeerStock.Beer
-		Where Beer.Live=100
-		AND ".$type." = ".$search."
-		GROUP BY Beer.Beer, 
-		        Beer.Brewery
-		ORDER BY Beer ASC
-		");
+		$result = mysql_query("SELECT Brewery, Beer	FROM Beer WHERE " . $type . " like '%" . $search . "%'");
+
+		
 		if (!$result) {    
-			die("Query to show fields from table failed");
+			die($result);
 		}
 		$fields_num = mysql_num_fields($result);
-		echo "<table align='center'><col><col id='middle'><col><col id='middle'><col><col><col><col><thead>";
-
-		// printing table headers
-		for($i=0; $i<$fields_num; $i++)
-		{    $field = mysql_fetch_field($result);
-		    echo "<th>{$field->name}</th>";
-		}
-		echo "</thead>\n";
 
 
 		while($row = mysql_fetch_array($result))
 		  
 		{
-		  echo "<tr>";
-		  echo "<td><h2>" . $row['Beer'] . "</h2></td>";
-		  echo "<td>" . $row['Brewery'] . "</td>";
-		  echo "<td>" . $row['Quantity'] . "</td>";  
-		  echo "</tr>";
-		  }
-		echo "</table>";
+		  echo $row['Brewery'] . ", " . $row['Beer'];
+		  echo "<hr>";
+		}
 
 		mysql_free_result($result);
+		
 		?>
 	</div>
 </div>
