@@ -76,8 +76,8 @@ while($row = mysql_fetch_array($result))
   echo "<td>" . $row['Brewery'] . "</td>";
   echo "<td>" . $row['Style'] . "</td>";
   echo "<td>" . $row['ABV'] . "</td>";
-  echo "<td><img src='/images/" . $row['Hops'] . " Hops.png' width='200'</td>";
-  echo "<td><img src='/images/SRM "	.	$row['SRM']	.	".png' height='75'</td>";
+  echo "<td><img src='/images/Hops/" . $row['Hops'] . " Hops.png' width='200'</td>";
+  echo "<td><img src='/images/SRM/SRM "	.	$row['SRM']	.	".png' height='75'</td>";
   echo "<td><img src='/images/kegs/"	. 	$row['Stock']	.	" .png' width='40'></td>"; 
   echo "<td>" . $row['Pints'] . "</td>";  
  
