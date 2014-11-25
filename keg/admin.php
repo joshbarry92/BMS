@@ -12,7 +12,7 @@
 </head>
 <body>
 
-<h1><p align='center'><img src='BeerLabel.png' </img><br> <?php $title ?> </h1></p>
+<h1><p align='center'><img src='BeerLabel.gif' </img><br> <?php $title ?> </h1></p>
 
 <div style="text-align:center">
 <table class="center">
@@ -30,7 +30,7 @@
 		<br>
 		<a href="#searchBeer"><h3>Search Beer List</h3></a>
 		<hr>
-		<a href="#addBeer"><h3>Add Custom Homebrew</h3></a>
+		<a href="#addBeer"><h3>Add New Brew</h3></a>
 		<br><br>
 	</div>
 </div>
@@ -41,8 +41,8 @@
 		<h2 style="color:#000000;">Add a Brew</h2>
 		<br>
 		<form action="#newBeer" method="GET">
-			Name: <input type="text" name="name"><br>
 			Brewery: <input type="text" name="brewery"><br>
+			Name: <input type="text" name="name"><br>
 			Style: <input type="text" name="style"><br>
 			ABV: <input type="text" name="abv"><br>
 			Hops: <select name="hops"><option value="1">1</option><option value="2">2</option><option value="3">3</option></select><br>
@@ -194,6 +194,7 @@
 			$conn->exec($sql);
 			$conn->exec($sql2);
 			echo "Beer Addeed! Lets <a href='#manageStock'>Manage the Stock</a>!";
+			$conn=NULL;
 			}
 		catch(PDOException $e)
 			{
@@ -231,6 +232,7 @@
 			$sql = "UPDATE BeerStock SET Quantity = '" . $fin . "' WHERE ID = '" . $id . "'";
 			$conn->exec($sql);
 			echo "Beer Addeed!";
+			$conn=NULL;
 			}
 		catch(PDOException $e)
 			{
@@ -255,6 +257,7 @@
 		$table = 'Beer';
 		$search = $_GET["search"];
 		$type = $_GET["type"];
+		
 		if (!mysql_connect($db_host, $db_user, $db_pwd))    
 			die("Can't connect to database");
 		if (!mysql_select_db($database))    

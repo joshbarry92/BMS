@@ -4,13 +4,13 @@
 <meta name="keywords" content="" />
 <meta name="description" content="" />
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<title>Barry's Bar</title>
+<title><?php echo $title; ?></title>
 <link href="http://fonts.googleapis.com/css?family=Oswald" rel="stylesheet" type="text/css" />
 <link href="http://fonts.googleapis.com/css?family=Arvo" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="beer.css">
 </head>
 <body>
-<h1><p align='center'><img src='BeerLabel.png' </img><br> <?php $title ?> </h1></p>
+<h1><p align='center'><img src='BeerLabel.gif' </img><br> <?php $title ?> </h1></p>
 
 
 	
