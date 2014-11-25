@@ -3,7 +3,8 @@
 <meta name="keywords" content="" />
 <meta name="description" content="" />
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<title>Barry's Bar</title>
+<?php $title = "Barry's Bar" ?>
+<title><?php echo $title; ?></title>
 <link href="http://fonts.googleapis.com/css?family=Oswald" rel="stylesheet" type="text/css" />
 <link href="http://fonts.googleapis.com/css?family=Arvo" rel="stylesheet" type="text/css" />
 <link href='http://fonts.googleapis.com/css?family=Walter+Turncoat' rel='stylesheet' type='text/css'>
@@ -12,7 +13,7 @@
 </head>
 <body>
 
-<h1><p align='center'><img src='BeerLabel.gif' </img><br> <?php $title ?> </h1></p>
+<h1><p align='center'><img src='BeerLabel.gif' </img><br> <?php echo $title; ?> </h1></p>
 
 <div style="text-align:center">
 <table class="center">
