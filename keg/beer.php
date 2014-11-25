@@ -36,7 +36,7 @@ WHEN Quantity BETWEEN 29 AND 43 THEN '75'
 WHEN Quantity >= 44 THEN '100' 
 WHEN Quantity IS NULL THEN '0'
 END AS Stock,
-ROUND(Quantity/0.47) AS Pints,
+ROUND(Quantity/0.47) AS Pints
 FROM Beer
 LEFT JOIN BeerStock
 ON Beer.UUID = BeerStock.ID
