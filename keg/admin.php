@@ -21,6 +21,7 @@
     <td><a href="#openModal"><h2>Add a Brew</h2></a></td>
     <td><a href="#manageStock"><h2>Manage Stock</h2></a></td>
   </tr>
+</table>
 </div>
 
 
@@ -32,7 +33,6 @@
 		<a href="#searchBeer"><h3>Search Beer List</h3></a>
 		<hr>
 		<a href="#addBeer"><h3>Add New Brew</h3></a>
-		<br><br>
 	</div>
 </div>
 
