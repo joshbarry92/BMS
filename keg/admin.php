@@ -209,7 +209,7 @@
 
 <div id="addStock" class="modalDialog">
 	<div>
-		<a href="#close" onClick="history.go(0)" title="Close" class="close">X</a>
+		<a href="/keg/admin.php" title="Close" class="close">X</a>
 		<h2 style="color:#000000;">Add New Beer</h2>
 		<br>
 		<?php
