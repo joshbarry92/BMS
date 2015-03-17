@@ -7,6 +7,8 @@
 <title><?php echo $title; ?></title>
 <link href="http://fonts.googleapis.com/css?family=Oswald" rel="stylesheet" type="text/css" />
 <link href="http://fonts.googleapis.com/css?family=Arvo" rel="stylesheet" type="text/css" />
+<link href='http://fonts.googleapis.com/css?family=Walter+Turncoat' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Overlock+SC' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" type="text/css" href="beer.css">
 </head>
 <body>
@@ -36,7 +38,8 @@ WHEN Quantity BETWEEN 29 AND 43 THEN '75'
 WHEN Quantity >= 44 THEN '100' 
 WHEN Quantity IS NULL THEN '0'
 END AS Stock,
-ROUND(Quantity/0.47) AS Pints
+ROUND(Quantity/0.47) AS Pints,
+UUID
 FROM Beer
 LEFT JOIN BeerStock
 ON Beer.UUID = BeerStock.ID
@@ -46,31 +49,21 @@ if (!$result) {
 }
 $fields_num = mysql_num_fields($result);
 echo "<table align='center'><col><col id='middle'><col><col id='middle'><col><col><col><col><thead>";
-
+echo "<th>Order</th>";
 // printing table headers
-for($i=0; $i<$fields_num; $i++)
+for($i=0; $i<$fields_num-1; $i++)
 {    $field = mysql_fetch_field($result);
     echo "<th>{$field->name}</th>";
 }
 echo "</thead>\n";
 
 
-// printing table rows
-//while($row = mysql_fetch_row($result))
-//{    
-//echo "<tbody><tr>";    
-// $row is array... foreach( .. ) puts every element    
-// of $row to $cell variable    
-//foreach($row as $cell)        
-//echo "<td>$cell</td>";
-//    echo "</tr>\n";
-//	}
-//echo "</tbody>";
 
 while($row = mysql_fetch_array($result))
   
 {
   echo "<tr>";
+  echo "<td><a href='?UUID=" . $row['UUID'] . "#orderBeer'><h2>Order</h2></a></td>";
   echo "<td><h2>" . $row['Beer'] . "</h2></td>";
   echo "<td>" . $row['Brewery'] . "</td>";
   echo "<td>" . $row['Style'] . "</td>";
@@ -79,7 +72,6 @@ while($row = mysql_fetch_array($result))
   echo "<td><img src='/images/SRM/SRM "	.	$row['SRM']	.	".png' height='75'</td>";
   echo "<td><img src='/images/kegs/"	. 	$row['Stock']	.	" .png' width='40'></td>"; 
   echo "<td>" . $row['Pints'] . "</td>";  
- 
   echo "</tr>";
   
   }
@@ -90,6 +82,14 @@ echo "</table>";
 
 mysql_free_result($result);
 ?>
+
+<div id="orderBeer" class="modalDialog">
+	<div>
+		<a href="#close" title="Close" class="close">X</a>
+		<h3>Hello World</h3>
+	</div>
+</div>
+
 
 </body>
 </html>

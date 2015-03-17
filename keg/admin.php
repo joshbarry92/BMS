@@ -11,7 +11,6 @@
 <link href='http://fonts.googleapis.com/css?family=Overlock+SC' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" type="text/css" href="beer.css">
 </head>
-
 <body>
 
 <h1><p align='center'><img src='BeerLabel.gif' </img><br> <?php echo $title; ?> </h1></p>
